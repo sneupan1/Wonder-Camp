@@ -20,7 +20,7 @@ var commentRoutes = require("./routes/comments"),
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 // mongoose.connect("mongodb://localhost/wonder_camp");
-mongoose.connect('mongodb+srv://sneupan1:notapassword@webdev-5xli1.mongodb.net/test?retryWrites=true&w=majority', {
+mongoose.connect(process.env.DATABASEURL, {
 	useNewUrlParser: true,
 	useCreateIndex: true
 	}). then(()=> {
@@ -73,7 +73,10 @@ app.use("/", indexRoutes);
 app.use("/campgrounds", campgroundRoutes);
 app.use("/campgrounds/:id/comments", commentRoutes);
 
-app.listen(process.env.PORT, process.env.IP);
-// app.listen(3000, function(){
-//     console.log("The WonderCamp has started");
-// });
+app.get("*", function(req, res) {
+	res.redirect("/campgrounds");
+});
+
+app.listen(process.env.PORT, process.env.IP, function(){
+	console.log("WonderCamp has started!");
+});
