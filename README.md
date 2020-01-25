@@ -43,6 +43,7 @@ Or, you can also sign up with your own new account.
     * node-geocoder
     * dotenv
     * Google Maps APIs
- Deployed using Heroku
+ ##### Deployed using Heroku
+ This app contains APIs and passwords that have been hidden deliberately to prevent misuse by other people.
    
   
