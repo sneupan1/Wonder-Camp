@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express 	= require("express"),
 	request 	= require("request"),
 	app 		= express(),
@@ -19,8 +20,9 @@ var commentRoutes = require("./routes/comments"),
 
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
+var url = process.env.DATABASEURL || "mongodb://localhost/wonder_camp";
 // mongoose.connect("mongodb://localhost/wonder_camp");
-mongoose.connect(process.env.DATABASEURL, {
+mongoose.connect(url, {
 	useNewUrlParser: true,
 	useCreateIndex: true
 	}). then(()=> {
@@ -53,18 +55,6 @@ app.use(function (req, res, next){
 	next();
 });
 
-var campgrounds= [
-       {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
-        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
-        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"},
-        {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
-        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
-        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"},
-        {name: "Salmon Creek", image: "https://farm9.staticflickr.com/8442/7962474612_bf2baf67c0.jpg"},
-        {name: "Granite Hill", image: "https://farm1.staticflickr.com/60/215827008_6489cd30c3.jpg"},
-        {name: "Mountain Goat's Rest", image: "https://farm7.staticflickr.com/6057/6234565071_4d20668bbd.jpg"}
-       ];
-
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.set("view engine", "ejs");
@@ -76,7 +66,7 @@ app.use("/campgrounds/:id/comments", commentRoutes);
 app.get("*", function(req, res) {
 	res.redirect("/campgrounds");
 });
-
-app.listen(process.env.PORT, process.env.IP, function(){
+var connectPORT = process.env.PORT || 3000;
+app.listen(connectPORT, process.env.IP, function(){
 	console.log("WonderCamp has started!");
 });
